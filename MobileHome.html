@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Metro Cab of Boston</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/mobilehome.css" />
+        <link rel="stylesheet" href="themes/metrocabmobile.min.css" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile.structure-1.4.0-rc.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#tabs").tabs();
+                $("menupanel").panel("open", optionsHash);
+
+            });
+        </script>
+    </head>
+    <body>
+        <div data-role="page" id="page1">
+            <div id="imageheader">
+                <img src="images/logomobile.png" alt="Logo" id="logoimage">
+                <a href="#menupanel"><img src="themes/images/icons-png/bars-black.png" alt="Menu" id="menuimage"></a>
+            </div>
+
+            <div data-role="navbar" id="tabs">
+                <ul>
+                    <li><a href="#tab1" class="ui-btn-active ui-state-persist">HOME</a></li>
+                    <li><a href="#tab2">SIGN IN</a></li>
+                    <li><a href="#tab3">JOIN NOW</a></li>
+                </ul>
+                <div id="tab1">
+                    <div data-role="content">
+                        <h3 style="color: #105819;"> SERVICES </h3>
+                        <div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+                            <div data-role="collapsible">
+                                <h3>Wheelchair Vans</h3>
+                                <p>Metro Cab offers handicapped accessible vehicle transportation including wheelchair 
+                                    accessible vans. We also have time-scheduled service for those patients of the 
+                                    City's hospitals and medical centers who require such service.</p>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>Airport Transport</h3>
+                                <p>Metro offers 24-hour transport service to Logan International Airport. For your convenience, you may schedule a 
+                                    transport to Logan 24 hours in advance. Just call our radio room at 617-782-5500 and one of our operators will 
+                                    assist you.</p>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>Package Delivery</h3>
+                                <p>Metro Cab offers same day, expedited delivery service for your time sensitive packages and envelopes. Call 
+                                    our general manager at 617-787-5438 to obtain custom delivery rates.</p>
+                            </div>
+                            <div data-role="collapsible">
+                                <h3>Customer "Call out"</h3>
+                                <p>Uniquely, unlike other taxi-cab companies, Metro Cab of Boston provides "call-out" service for all taxi customers. 
+                                    This will enable you to stay indoors during inclement weather, and be called out upon the taxi's arrival.</p>
+                            </div>
+                        </div>
+
+                        <div id="workdiv">
+                            <div id="borderBottom">
+                                <h1>how it works</h1>
+                            </div>
+                            <div id="stepcontainer">
+                                <div id="finddiv" class="steps">
+                                    <img src="images/search.png" class="stepimage" alt="search"/>
+                                    <h3>Find a Cab</h3>
+                                    <p>With the largest taxi-cabs fleet in greater Boston, finding a taxi has never been easier </p>
+                                </div>
+                                <div id="farediv" class="steps">
+                                    <img src="images/fare.png" class="stepimage" alt="fare"/>
+                                    <h3>Estimate a Fare</h3>
+                                    <p>Select your destination and get instant estimate of your fare</p>
+                                </div>
+                                <div id="paydiv" class="steps">
+                                    <img src="images/pay.png" class="stepimage" alt="pay"/>
+                                    <h3>Pay for Rides</h3>
+                                    <p>Scan you cards and pre-set your tip for one tap payment</p>
+                                </div>
+                                <div id="historydiv" class="steps">
+                                    <img src="images/history.png" class="stepimage" alt="history"/>
+                                    <h3>Trip History</h3>
+                                    <p>See all your past trip records for expense record</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab2">
+                    <div data-role="content">
+                        <form action="mobilesignin.php" method="post" data-ajax=false>
+                            <input type="text" name="username" id="username" placeholder="Username" value="" data-clear-btn="true">
+                            <input type="password" name="password" id="password" placeholder="Password" value="" data-clear-btn="true">
+                            <input type="submit" value="Sign In" data-icon="grid" data-iconpos="right" data-mini="true">
+                        </form>
+                    </div>
+                </div>
+                <div id="tab3">
+                    <div data-role="content">
+                        <form id="joinform" action="">
+                            <div id="formfieldsdiv">
+                                <input type="email" name="emailtxt" id="emailtxt" placeholder="Email Id" required="required"/>
+                                <input type="text" name="nametxt" id="nametxt" placeholder="Name" required="required" />
+                                <input type="password" name="passwordtxt" id="passwordtxt" placeholder="Password" required="required" />
+                                <div id="addressdiv">
+                                    <input type="text" name="ziptxt" id="ziptxt" placeholder="Zip Code" pattern="[0-9]*" required="required" maxlength="5"/>                            
+                                    <div>
+                                        <input type="text" name="streettxt" id="streettxt" placeholder="Street" required="required"/>
+                                        <input type="text" name="citytxt" id="citytxt" placeholder="City" required="required"/>
+                                        <input type="text" name="statetxt" id="statetxt" placeholder="State" required="required" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="checkboxdiv">
+                                <input type="checkbox" name="agreecheckbox" id="agreecheckbox" required="required"> 
+                                <label for="agreecheckbox">I agree with the Terms of Service </label>
+                            </div>
+                            <div id="signupbtn">
+                                <button id="signupbutton"> Register </button> 
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div data-role="panel" id="menupanel" data-display="push" data-position-fixed="true">
+                <div id="menu_container">
+                    <ul id="menu">
+                        <li><a href="mobilehome.html">Home</a></li>
+                        <li><a href="">Contact Us</a>
+                            <ul>
+                                <li><a href="">General Manager</a></li>
+                                <li><a href="">Accounts Manager</a></li>
+                                <li><a href="">Customer Support</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Account Enquiries</a>
+                            <ul>
+                                <li><a href="">Print Application</a></li>
+                                <li><a href="">CCard Auth. Form</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Supplies</a>
+                            <ul>
+                                <li><a href="">Order Voucher Form</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="">Useful Info</a>
+                            <ul>
+                                <li><a href="">Taxi Info</a></li>
+                                <li><a href="">Meter Rates</a></li>
+                                <li><a href="">Flat Rates</a></li>
+                                <li><a href="">Online Services</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Metro Cab of Boston</title>
+        <meta charset="utf-8">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+        </script>
+
+        <link rel="stylesheet" href="css/homeGT1200.css" media="(min-width:1200px)">
+        <link rel="stylesheet" href="css/homeGT1200.css" media="(min-width:1025px) and (max-width:1199px)">
+        <link rel="stylesheet" href="css/homeGT768.css" media="(min-width:768px) and (max-width:1024px)">
+        <link rel="stylesheet" href="css/homeGT481.css" media="(min-width:481px) and (max-width:767px)">
+        <link rel="stylesheet" href="css/homeGT32.css" media="(min-width:320px) and (max-width:480px)">
+
+        <link rel="stylesheet" href="css/animations.css">
+
+
+        <link href="css/custom-theme/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#tabs").tabs();
+                $("#signinbutton").button();
+                $("#registerbutton").button();
+                $("#signupbutton").button();
+                $('#tab1').click(function() {
+                    $("#tabs-1").addClass("expandOpen1");
+                });
+                $('#tab2').click(function() {
+                    $("#tabs-2").addClass("expandOpen1");
+                });
+                $('#tab3').click(function() {
+                    $("#tabs-3").addClass("expandOpen1");
+                });
+                $('#tab4').click(function() {
+                    $("#tabs-4").addClass("expandOpen1");
+                });
+                $("#gototop").hide();
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > 100) {
+                        $('#gototop').fadeIn();
+                    } else {
+                        $('#gototop').fadeOut();
+                    }
+                });
+                $('.totop').click(function() {
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 'slow');
+                });
+                ajaxrequestrandom();
+                var set_delay = 10000;
+                setInterval(ajaxrequestrandom, set_delay);
+                $(".zip-error").slideUp(200);
+
+                $("#signupdiv").dialog({
+                    autoOpen: false,
+                    width: 500,
+                    modal: true,
+                    create: function() {
+                        var firstReveal = true;
+                        $("#ziptxt").keyup(function() {
+                            $(".zip-error").slideUp(200);
+                            var el = $(this);
+                            if ((el.val().length == 5)) {
+                                $.ajax({
+                                    url: "http://zip.elevenbasetwo.com",
+                                    cache: false,
+                                    dataType: "json",
+                                    type: "GET",
+                                    data: "zip=" + el.val(),
+                                    success: function(result, success) {
+                                        $(".zip-error").slideUp(200);
+                                        $("#citytxt").val(result.city);
+                                        $("#statetxt").val(result.state);
+                                        $("#addressdiv > div").slideDown();
+                                        if (firstReveal) {
+                                            setTimeout(function() {
+                                                $("streettxt").focus();
+                                            },
+                                                    400);
+                                        }
+                                        ;
+                                        firstReveal = false;
+                                    },
+                                    error: function(result, success) {
+                                        $("#addressdiv > div").slideUp();
+                                        $(".zip-error").slideDown(300);
+                                    }
+                                });
+                            }
+                            else if (el.val().length < 5) {
+                                $(".zip-error").slideUp(200);
+                            }
+                            ;
+                        });
+                        
+                        $("#agreecheckbox").click(function (){
+                           if($("#agreecheckbox:checked")){
+                             $("#signupbutton").removeAttr("disabled");
+                           }
+                           else{
+                               $("#signupbutton").attr("disabled", "disabled");
+                           }
+                        });
+                        
+                        $("#signupbutton").click(function (event){
+                            email = $("#emailtxt").val();
+                            name = $("#nametxt").val();
+                            pwd = $("#passwordtxt").val();
+                            zip = $("#ziptxt").val();
+                            street = $("#streettxt").val();
+                            state = $("#statetxt").val();
+                            city = $("#citytxt").val();
+                            
+                            $.post("join.php",{emailtxt: email, nametxt: name, passwordtxt: pwd, ziptxt: zip, streettxt: street, citytxt: city, statetxt: state})
+                            .done(function (){
+                                alert("Registration Successfully Completed. Thank You for Joining METRO CAB");
+                                $("#signupdiv").dialog("close");
+                                
+                            });
+                        });
+                    }
+                });
+                $("#registerbutton").click(function() {
+                    $("#addressdiv > div").hide();
+                    $("#signupbutton").attr("disabled", "disabled");
+                    $("#ziptxt").show();
+                    $("#signupdiv").dialog("open");
+                });
+                
+                $("#onlinetaxisdiv").draggable({containment: "#centerimage_div", scroll: false});
+
+
+
+                $(document).tooltip({
+                    show: {
+                        effect: "slideDown",
+                        delay: 150
+                    }
+                });
+
+            });//end of document ready
+            
+            function ajaxrequestrandom() {
+                $.post("randomtaxi.php", {type: 'random'}).done(function(data) {
+                    $("#onlinetaxisdiv").html('<h2>' + data + ' Cabs </h2><span>VACANT NOW</span>');
+                });
+            }
+
+        </script>
+
+
+        <style>
+            @media all{
+                article, aside, details, figcaption, figure, footer, header, hgroup, nav, section{display: block;}
+            }
+        </style>
+    </head>
+    <body>
+        <div id="top"></div>
+        <div id="container">
+            <header>
+                <div id="headertop_container">
+                    <div id="signin_container">
+                        <!--<button id="signinbutton" class="right"> sign in </button>-->
+                        <ul>
+                            <li><a href="">Sign in</a>
+                                <div id="signindiv">
+                                    <form method="post" action="signin.php" name="loginform"> 
+                                        <div id="loginfields">
+                                            <label><strong>Username</strong></label><br />
+                                            <input type="text" name="username" id="username" placeholder="username" required="required"/><br />
+                                            <label id="passwordlabel"><strong>Password</strong></label>
+                                            <input type="password" name="password" id="password" placeholder="password" required="required"/><br /><br />
+                                            <input type="submit" name="login" value="Login" id="loginbutton"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="numimage_container">
+                        <img src="images/phone.jpg" alt="Number_Image" id="numimage">
+                    </div>
+                    <div id="logoimage_container">
+                        <img src="images/Logo1.jpg" alt="Logo_Image" id="logoImage">
+                    </div>
+                </div>
+
+                <nav>
+                    <div id="menu_container">
+                        <ul class="blankul">
+                            <li><a class="blankmenu"></a></li>
+                        </ul>
+                        <ul id="menu">
+                            <li class="sixteen"><a href="homepage.html">Home</a></li>
+                            <li class="twentyone"><a href="">Contact Us</a>
+                                <ul>
+                                    <li><a href="">General Manager</a></li>
+                                    <li><a href="">Accounts Manager</a></li>
+                                    <li><a href="">Customer Support</a></li>
+                                </ul>
+                            </li>
+                            <li class="twentysix"><a href="">Account Enquiries</a>
+                                <ul>
+                                    <li><a href="">Print Application</a></li>
+                                    <li><a href="">CCard Auth. Form</a></li>
+                                </ul>
+                            </li>
+                            <li class="sixteen"><a href="">Supplies</a>
+                                <ul>
+                                    <li><a href="">Order Voucher Form</a></li>
+                                </ul>
+                            </li>
+                            <li class="twentyone"><a href="">Useful Info</a>
+                                <ul>
+                                    <li><a href="">Taxi Info</a></li>
+                                    <li><a href="">Meter Rates</a></li>
+                                    <li><a href="">Flat Rates</a></li>
+                                    <li><a href="">Online Services</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="blankul">
+                            <li class="blankli"><a class="blankmenu"></a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+
+            <div id="centerimage_div" class="slideExpandUp">
+                <div id="onlinetaxisdiv" class="pulse">
+                    <h2>800 Cabs </h2>
+                    <span>VACANT NOW</span>
+                </div>
+                <div id="webbooking_content">
+                    <span id="web_content1">The new way to ride in</span>
+                    <span id="web_content11">Boston</span><br />
+                    <span id="web_content2">Just log in, book, and ride freely.</span>
+                    <button id="registerbutton"> Join metro cab </button>
+                </div>
+            </div>
+
+            <div id="signupdiv" title="Sign Up">
+                <form id="joinform" action="">
+                    <div id="formfieldsdiv">
+                        <input type="email" name="emailtxt" id="emailtxt" placeholder="Email Id" required="required"/>
+                        <input type="text" name="nametxt" id="nametxt" placeholder="Name" required="required" />
+                        <input type="password" name="passwordtxt" id="passwordtxt" placeholder="Password" required="required" />
+                        <div id="addressdiv">
+                            <input type="text" name="ziptxt" id="ziptxt" placeholder="Zip Code" pattern="[0-9]*" required="required" maxlength="5"/>                            
+                            <p class="zip-error">Not a real zip code.</p>
+                            <div>
+                                <input type="text" name="streettxt" id="streettxt" placeholder="Street" required="required"/>
+                                <input type="text" name="citytxt" id="citytxt" placeholder="City" required="required"/>
+                                <input type="text" name="statetxt" id="statetxt" placeholder="State" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="checkboxdiv">
+                        <input type="checkbox" name="agreecheckbox" id="agreecheckbox" required="required"> 
+                        <label for="agreecheckbox">I agree with the Terms of Service </label>
+                    </div>
+                    <div id="signupbtn">
+                        <button id="signupbutton"> Register </button> 
+                    </div>
+                </form>
+            </div>
+
+            <div id="tabs">
+                <ul>
+                    <li><a id="tab1" href="#tabs-1">Wheelchair Vans</a></li>
+                    <li><a id="tab2" href="#tabs-2">Airport Transport</a></li>
+                    <li><a id="tab3" href="#tabs-3">Package Delivery</a></li>
+                    <li><a id="tab4" href="#tabs-4">Customer "Call out"</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <div class="image_div">
+                        <img src="images/wheelchair.jpg" alt="Cab Image" class="contentimage">
+                    </div>
+                    <div class="weelchaircontentdiv">
+                        <span class="weelchaircontentspan">
+                            Metro Cab offers handicapped accessible vehicle transportation including wheelchair 
+                            accessible vans. We also have time-scheduled service for those patients of the 
+                            City's hospitals and medical centers who require such service. We offer voucher 
+                            account billing services for those medical facilities that may require a monthly 
+                            or weekly billing.
+                        </span>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <div class="image_div">
+                        <img src="images/airporttransport.jpg" alt="Cab Image" class="contentimage">
+                    </div>
+                    <div class="weelchaircontentdiv">
+                        <span class="weelchaircontentspan">
+                            Metro offers 24-hour transport service to Logan International Airport. For your convenience, you may schedule a 
+                            transport to Logan 24 hours in advance. Just call our radio room at 617-782-5500 and one of our operators will 
+                            assist you.
+                        </span>
+                    </div>
+                </div>
+                <div id="tabs-3">
+                    <div class="image_div">
+                        <img src="images/packagedelivery.jpg" alt="Cab Image" class="contentimage">
+                    </div>
+                    <div class="weelchaircontentdiv">
+                        <span class="weelchaircontentspan">
+                            Metro Cab offers same day, expedited delivery service for your time sensitive packages and envelopes. Call 
+                            our general manager at 617-787-5438 to obtain custom delivery rates.
+                        </span>
+                    </div>
+                </div>
+                <div id="tabs-4">
+                    <div class="image_div">
+                        <img src="images/callout.jpg" alt="Cab Image" class="contentimage">
+                    </div>
+                    <div class="weelchaircontentdiv">
+                        <span class="weelchaircontentspan">
+                            Uniquely, unlike other taxi-cab companies, Metro Cab of Boston provides "call-out" service for all taxi customers. 
+                            This will enable you to stay indoors during inclement weather, and be called out upon the taxi's arrival.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="workdiv">
+                <div id="borderBottom">
+                    <h1>how it works</h1>
+                </div>
+                <div id="stepcontainer">
+                    <div id="finddiv" class="steps">
+                        <img src="images/search.png" class="stepimage" alt="search"/>
+                        <h3>Find a Cab</h3>
+                        <p>With the largest taxi-cabs fleet in greater Boston, finding a taxi has never been easier </p>
+                    </div>
+                    <div id="farediv" class="steps">
+                        <img src="images/fare.png" class="stepimage" alt="fare"/>
+                        <h3>Estimate a Fare</h3>
+                        <p>Select your destination and get instant estimate of your fare</p>
+                    </div>
+                    <div id="paydiv" class="steps">
+                        <img src="images/pay.png" class="stepimage" alt="pay"/>
+                        <h3>Pay for Rides</h3>
+                        <p>Scan you cards and pre-set your tip for one tap payment</p>
+                    </div>
+                    <div id="historydiv" class="steps">
+                        <img src="images/history.png" class="stepimage" alt="history"/>
+                        <h3>Trip History</h3>
+                        <p>See all your past trip records for expense record</p>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="totop" id="gototop">
+                    <a href="javascript:void(0)" class="totop">Top</a>
+                </div>
+                <img src="images/googleplay.jpg" class="footerimage" alt="googleplay"/>
+                <img src="images/appstore.jpg" class="footerimage" alt="appstore"/>
+            </footer>
+        </div>
+    </body>
+</html>
+

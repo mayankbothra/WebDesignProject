@@ -1,0 +1,73 @@
+#menupanel{
+    width: 65%;
+    background-color: #105819;
+}
+#imageheader{
+    width: 100%;
+    background: white;
+    height: 40px;
+}
+#logoimage{
+    width: 60%;
+    height: 100%;
+    float: right;
+}
+#menuimage{
+    margin-left: 10px;
+    margin-top: 8px;
+    width: 35px;
+    height: 60%;
+}
+#menu_container ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+#menu_container ul li{
+    display: list-item;
+    position: relative;
+    font-size: 16px;
+    font-weight: 100;
+}
+#menu_container li ul{
+    display: none;
+}
+#menu_container ul li a{
+    border-radius: 7px;
+    text-decoration: none;
+    display: block;
+    padding: 5px 10px 5px 10px;
+    margin-left: 0.1px;   
+    white-space: nowrap;
+    color: #ffffff;
+}
+#menu_container ul#menu li a:hover { 
+    background: #aadfaa url(custom-theme/images/ui-bg_inset-soft_40_aadfaa_1x100.png) 50% 50% repeat-x;
+    color: #105819;
+}
+#menu_container li:hover ul{
+    display: block;
+    position: relative;
+    left: 20px;
+    z-index: 400;
+}
+#menu_container li:hover li {   
+    float: none;
+}
+#menu_container ul li ul li a{
+    font-size: 12px;
+}
+#menu_container li:hover a { 
+    /*background: #105819 url(custom-theme/images/ui-bg_glass_30_105819_1x400.png) 50% 50% repeat-x;*/
+} 
+#menu-container li:hover li a:hover { 
+    background: #105819 url(custom-theme/images/ui-bg_glass_30_105819_1x400.png) 50% 50% repeat-x;
+}
+#stepcontainer{
+    text-align: center;
+    border-top: 1px solid #dddddd;
+}
+#workdiv{
+    text-align: center;
+    margin-top: 30px;
+}
