@@ -10,13 +10,7 @@
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile.structure-1.4.0-rc.1.min.css" />
         <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $("#tabs").tabs();
-                $("menupanel").panel("open", optionsHash);
-
-            });
-        </script>
+        <script src="js/mobileDash.js"></script>
     </head>
     <body>
         <div data-role="page" id="page2">
